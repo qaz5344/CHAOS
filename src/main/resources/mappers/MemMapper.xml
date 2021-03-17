@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.human.chaosIF.IF_MemDAO">
+	<!-- insert 영역 -->
+	<insert id="InsertMem" parameterType="MemberDTO">
+		insert into Member(ID,PW,Email,Nick,authkey,pname) values (#{Id},#{Pw},#{Email},#{Nick},#{authKey},PN_SQS.nextval)
+	</insert>
+	
+	<!-- select 영역 -->
+	<select id="Login" resultType="MemberDTO"> <!-- 회원정보 검색 -->
+		select * from Member where ID = #{Id} and PW = #{Pw}
+	</select>
+	
+	<select id="selEmail" resultType="MemberDTO"> <!-- 닉네임으로 상태,이메일 검색 -->
+		select STATUS,EMAIL,PNAME from Member where Nick = #{Nick}
+	</select>
+	
+	<select id="selId" resultType="int"> <!-- 아이디로 상태,이메일 검색 -->
+		select Count(*) from Member where id=#{Id}
+	</select>
+	
+	<select id="selNi" resultType="int"> <!-- 닉네임으로 상태,이메일 검색 -->
+		select Count(*) from Member where NICK = #{Nick}
+	</select>
+	
+	<select id="FindPW" resultType="String">
+ 		select PW from Member where Email=#{Email} and ID=#{Id}
+   </select>
+   
+   <select id="Mchk" resultType="Integer">
+   		select count(*) from Member where ID = #{Id} and Email = #{Email}
+   </select>
+   
+   <select id="FindId" resultType="MemberDTO">
+   		select AUTHKEY from Member where Email = #{Email}
+   </select>
+	
+	<select id="FindId2" resultType="MemberDTO">
+   		select ID from Member where Email = #{Email}
+   </select>
+	
+	<!-- update 영역 -->
+	<update id="UpdateAuth" parameterType="MemberDTO">
+		update Member set status = 'Y' where authKey = #{authKey} and email = #{Email}
+	</update>
+	<update id="UpdateEmail" parameterType="MemberDTO">
+		update Member set Email = #{Email},AUTHKEY = #{authKey} where nick = #{Nick}
+	</update>
+	<update id="modnick" parameterType="MemberDTO">
+		update Member set Nick = #{Nick} where Id=#{Id} and email = #{Email}
+	</update>
+	<update id="modpw" parameterType="MemberDTO">
+		update Member set Pw = #{Pw} where Id=#{Id} and email = #{Email}
+	</update>
+	<update id="modpp" parameterType="MemberDTO">
+		update Member set pname = #{pname} where Nick=#{Nick}
+	</update>
+</mapper>

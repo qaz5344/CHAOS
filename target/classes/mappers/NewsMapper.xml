@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.human.chaosIF.IF_NewsDAO">
+	<!-- insert 영역 -->
+	<insert id="insertNews" parameterType="NewsDTO">
+		Insert into news (Nick,content,no,PNAME) values(#{Nick},#{Content},NO_SQS.nextval,#{pname})
+	</insert>
+	
+	<!-- select 영역 -->
+	<select id="selectAllN" resultType="NewsDTO">
+		SELECT * FROM NEWS ORDER BY dt DESC
+	</select>
+	<select id="selectOne" resultType="NewsDTO">
+		SELECT * FROM NEWS where No = #{No} ORDER BY dt DESC
+	</select>
+	<select id="selectNick" resultType="NewsDTO">
+		SELECT * FROM NEWS where Nick = #{Nick} ORDER BY dt DESC
+	</select>
+	<select id="selectNo" resultType="int">
+		SELECT No FROM (SELECT * FROM NEWS ORDER BY DT DESC) where ROWNUM = 1
+	</select>
+	
+	<select id="likecnt" resultType="Integer">
+		select likes from news where no=#{no}
+	</select>
+	
+	<!-- update 영역 -->
+	<update id="updateNews">
+		UPDATE NEWS SET CONTENT=#{Content} WHERE no=#{No}
+	</update>
+	<update id="likeplus">
+		update news set likes=likes+1 where no=#{no}
+	</update>
+	<update id="likeminus">
+		update news set likes=likes-1 where no=#{no}
+	</update>
+	<!-- 삭제 영역 -->
+	<delete id="deleteNews" >
+		delete from news where no = #{No}
+	</delete>
+</mapper>

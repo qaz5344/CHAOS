@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.human.chaosIF.IF_RevDAO">
+
+	<!-- insert 영역 -->
+	<insert id="InsertRev" parameterType="ReviewDTO">
+		insert into review(no,Nick,content,rnum,pname) values (#{No}, #{Nick}, #{Content},NO_SQS.nextval,#{pname})
+	</insert>
+	
+	<insert id="InsertRevr" parameterType="ReviewDTO"> <!-- 대댓글 추가하기 -->
+		insert into review(no,Nick,content,status,rgroup,rnum,pname) values (#{No}, #{Nick}, #{Content}, #{status}, #{rgroup},NO_SQS.nextval,#{pname})
+	</insert>
+	
+	<!-- select 영역 -->
+	<select id="selectAll" resultType="ReviewDTO">
+      select * from review where no = #{No}
+   </select>
+   
+   <select id="selectAllR" resultType="ReviewDTO"> <!-- 대댓글 가져오기 -->
+      select rgroup,nick,content,RNUM,PNAME from review where no = #{No} and Status = 1
+   </select>
+	<!-- 업데이트 영역 -->
+	<update id="UpdateRev" parameterType="ReviewDTO">
+		update review set content = #{Content} where rnum = #{rnum}
+	</update>
+	
+	<!-- 삭제 영역 -->
+   <delete id="DeleteRev" >
+      delete from review where RNUM = #{num}
+   </delete>
+   
+   <delete id="ReDeleteRev" >
+      delete from review where RGROUP = #{num}
+   </delete>
+   
+   <delete id="DeleteRevr" >
+      delete from review where RNUM = #{num}
+   </delete>
+	
+</mapper>

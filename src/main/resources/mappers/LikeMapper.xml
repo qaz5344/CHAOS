@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.human.chaosIF.IF_LikeDAO">
+	<!-- insert 영역 -->
+	<insert id="insertLike" parameterType="LikeDTO">   <!-- 라이크 튜플 추가 -->
+		Insert into likes(no,id) values
+		(#{no},#{id})
+	</insert>
+	
+	<!-- select 영역 -->
+	<select id="AllLike" resultType="LikeDTO">
+		select * from likes where id=#{id}
+	</select>
+	
+	<select id="likechk" resultType="Integer" parameterType="LikeDTO">
+		select Count(*) from likes where id=#{id} and no=#{no}
+	</select>
+	<!-- update 영역 -->
+	
+	<!-- delete 영역 -->
+	<delete id="deleteLike" parameterType="LikeDTO">
+	delete from likes where id=#{id} and no=#{no}
+	</delete>
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.human.chaosIF.IF_FileDAO">
+  	<select id="seFile" resultType="FileDTO">
+  		SELECT * from files
+  	</select>
+  	<select id="seFiles" resultType="FileDTO">
+  		SELECT * from files where no = #{no}
+  	</select>
+  	<select id="seFileUser" resultType="FileDTO">
+  		SELECT * from files where nick = #{Nick}
+  	</select>
+  	<insert id="insertF">
+  		insert into files (no,FNAME,NICK) values (#{no},#{Fname},#{Nick})
+  	</insert>
+  	<delete id="delBnum">
+  		DELETE FROM FILES WHERE no = #{no}
+  	</delete>
+  </mapper>
